@@ -3,9 +3,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
-		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
 	<!-- spring配置文件 -->
 	<context:component-scan base-package="com.starofdream">
@@ -25,6 +27,35 @@
 		<!-- 指定mybatis全局配置文件的位置 -->
 		<property name="configLocation" value="classpath:mybatis.xml"></property>
 		<property name="dataSource" ref="dataSource"></property>
-		
+		<!-- 配置mapper文件的位置 -->
+		<property name="mapperLocations" value="classpath:mapper/*.xml"></property>
 	</bean>
+	
+	<!-- 配置扫描器，将mybatis接口的实现加入到ioc容器中 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.starofdream.crud.dao"></property>
+	</bean>
+	
+	<!-- 事务控制 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<!-- 配置开启事务 -->
+	<aop:config>
+		<!-- 切入点表达式 -->
+		<aop:pointcut expression="execution(* com.starofdream.crud.service..*(..))" id="txPoint"/>
+		<!-- 配置事务增强 -->
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPoint"/>
+	</aop:config>
+	
+	<!-- 事务增强 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- 所有方法都是事务方法 -->
+			<tx:method name="*"/>
+			<!-- 以get开头的方法都是事务方法 -->
+			<tx:method name="get*" read-only="true"/>
+		</tx:attributes>
+	</tx:advice>
 </beans>
