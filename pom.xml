@@ -36,6 +36,14 @@
 	    <artifactId>spring-aspects</artifactId>
 	    <version>4.3.7.RELEASE</version>
 	</dependency>
+	<!-- spring test -->
+	<!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-test</artifactId>
+	    <version>4.3.7.RELEASE</version>
+	    <scope>test</scope>
+	</dependency>
     <!-- mybatis -->
     <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
 	<dependency>
@@ -79,6 +87,7 @@
 	    <version>3.0.1</version>
 	    <scope>provided</scope>
 	</dependency>
+	<!-- mybatis generator -->
     <!-- https://mvnrepository.com/artifact/org.mybatis.generator/mybatis-generator-core -->
 	<dependency>
 	    <groupId>org.mybatis.generator</groupId>
