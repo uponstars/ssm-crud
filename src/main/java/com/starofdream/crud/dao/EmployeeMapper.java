@@ -1,9 +1,11 @@
 package com.starofdream.crud.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.starofdream.crud.bean.Employee;
 import com.starofdream.crud.bean.EmployeeExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface EmployeeMapper {
     /**

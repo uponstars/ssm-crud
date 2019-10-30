@@ -2,6 +2,7 @@ package com.starofdream.crud.dao;
 
 import com.starofdream.crud.bean.Department;
 import com.starofdream.crud.bean.DepartmentExample;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

@@ -1,0 +1,12 @@
+com\starofdream\crud\bean\Employee.class
+com\starofdream\crud\bean\DepartmentExample$Criteria.class
+com\starofdream\crud\dao\EmployeeMapper.class
+com\starofdream\crud\dao\DepartmentMapper.class
+com\starofdream\crud\bean\DepartmentExample$Criterion.class
+com\starofdream\crud\bean\DepartmentExample.class
+com\starofdream\crud\bean\EmployeeExample$GeneratedCriteria.class
+com\starofdream\crud\bean\EmployeeExample.class
+com\starofdream\crud\bean\Department.class
+com\starofdream\crud\bean\DepartmentExample$GeneratedCriteria.class
+com\starofdream\crud\bean\EmployeeExample$Criteria.class
+com\starofdream\crud\bean\EmployeeExample$Criterion.class
