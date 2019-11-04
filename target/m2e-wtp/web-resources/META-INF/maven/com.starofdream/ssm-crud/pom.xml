@@ -7,6 +7,10 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>ssm-crud Maven Webapp</name>
   <url>http://maven.apache.org</url>
+  <properties>
+	<!-- 设置默认编码 -->
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
   <dependencies>
   	<!-- https://mvnrepository.com/artifact/junit/junit -->
 	<dependency>
@@ -97,6 +101,25 @@
 	</dependency>
   </dependencies>
   <build>
-    <finalName>ssm-crud</finalName>
-  </build>
+   <!--扫描到resources下的xml等资源文件-->
+	   <resources>
+	      <resource>
+	         <directory>src/main/java</directory>
+	         <includes>
+	            <include>**/*.properties</include>
+	            <include>**/*.xml</include>
+	         </includes>
+	         <filtering>true</filtering>
+	      </resource>
+	      <resource>
+	         <directory>src/main/resources</directory>
+	         <includes>
+	            <include>**/*.properties</include>
+	            <include>**/*.xml</include>
+	         </includes>
+	         <filtering>true</filtering>
+	      </resource>
+	   </resources>
+	   <finalName>ssm-crud</finalName>
+	</build>
 </project>

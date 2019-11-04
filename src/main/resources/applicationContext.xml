@@ -36,6 +36,11 @@
 		<property name="basePackage" value="com.starofdream.crud.dao"></property>
 	</bean>
 	
+	<!-- 配置一个执行批量的sqlsession -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
+		<constructor-arg name="executorType" value="BATCH"></constructor-arg>
+	</bean>
 	<!-- 事务控制 -->
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"></property>
