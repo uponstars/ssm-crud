@@ -9,4 +9,7 @@
 	<typeAliases>
 		<package name="com.starofdream.crud.bean"></package>
 	</typeAliases>
+	<plugins>
+		<plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
+	</plugins>
 </configuration>
