@@ -25,6 +25,7 @@ import com.starofdream.crud.bean.Employee;
 public class MVCTest {
 	@Autowired
 	WebApplicationContext context;
+	
 	MockMvc mockMvc;
 	
 	@Before
@@ -34,9 +35,9 @@ public class MVCTest {
 	
 	@Test
 	public void testPage() throws Exception {
-		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/emps").param("pn", "1")).andReturn();
+		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/emps").param("pn", "5")).andReturn();
 		MockHttpServletRequest request = result.getRequest();
-		PageInfo pi = (PageInfo) request.getAttribute("PageInfo");
+		PageInfo pi = (PageInfo) request.getAttribute("pageInfo");
 		System.out.println("当前页码：" + pi.getPageNum());
 		System.out.println("总页码：" + pi.getPages());
 		System.out.println("总记录数：" + pi.getTotal());
@@ -45,6 +46,8 @@ public class MVCTest {
 		for (int i : nums) {
 			System.out.print(" " + i);
 		}
+		
+		System.out.println();
 		
 		//获取员工数据
 		List<Employee> list = pi.getList();
