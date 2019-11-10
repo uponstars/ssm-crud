@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.starofdream.crud.bean.Employee;
+import com.starofdream.crud.bean.Msg;
 import com.starofdream.crud.service.EmployeeService;
 
 /**
@@ -31,10 +32,11 @@ public class EmployeeController {
 	 */
 	@RequestMapping("/emps")
 	@ResponseBody
-	public PageInfo getEmpsWithJason(@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+	public Msg getEmpsWithJason(@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
 		PageHelper.startPage(pn, 5);
 		List<Employee> emps = employeeService.getAll();
-		return new PageInfo(emps, 5);
+		PageInfo pageInfo = new PageInfo(emps, 5);
+		return Msg.success().add("pageInfo", pageInfo);
 	}
 	/**
 	 * 查询员工数据（分页查询）
