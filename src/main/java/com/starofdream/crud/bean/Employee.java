@@ -1,5 +1,9 @@
 package com.starofdream.crud.bean;
 
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Email;
+
 public class Employee {
     /**
      *
@@ -17,6 +21,7 @@ public class Employee {
      *
      * @mbg.generated Sun Oct 27 16:13:25 CST 2019
      */
+    @Pattern(regexp = "(^[a-zA-Z0-9_-]{6,16}$)|(^[\\u2E80-\\u9FFF]{2,5})", message = "用户名可以是2-5位中文或者是6-16位英文和数字的组合")
     private String empName;
 
     /**
@@ -35,6 +40,7 @@ public class Employee {
      *
      * @mbg.generated Sun Oct 27 16:13:25 CST 2019
      */
+    @Email(message = "邮箱格式不正确！")
     private String email;
 
     /**
