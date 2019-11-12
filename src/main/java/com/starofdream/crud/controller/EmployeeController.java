@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,6 +32,30 @@ public class EmployeeController {
 	@Autowired
 	EmployeeService employeeService;
 
+	/**
+	 * 员工更新方法
+	 * @param employee
+	 * @return
+	 */
+	@RequestMapping(value = "/emp/{empId}", method = RequestMethod.PUT)
+	@ResponseBody
+	public Msg saveEmp(Employee employee) {
+		employeeService.updateEmp(employee);
+		return Msg.success();
+	}
+	
+	/**
+	 * 根据id查询员工信息
+	 * @param empId
+	 * @return
+	 */
+	@RequestMapping(value = "/emp/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public Msg getEmp(@PathVariable("id") Integer empId) {
+		Employee employee = employeeService.getEmp(empId);
+		return Msg.success().add("emp", employee);
+	}
+	
 	/**
 	 * 检查用户名是否可用
 	 * 为支持JSR-303校验，导入Hibernate-Validator

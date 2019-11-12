@@ -46,4 +46,22 @@ public class EmployeeService {
 		return count == 0;
 	}
 
+	/**
+	 * 按照员工id查询员工
+	 * @param empId
+	 * @return
+	 */
+	public Employee getEmp(Integer empId) {
+		Employee employee = employeeMapper.selectByPrimaryKey(empId);
+		return employee;
+	}
+
+	/**
+	 * 保存更新的员工信息
+	 * @param employee
+	 */
+	public void updateEmp(Employee employee) {
+		employeeMapper.updateByPrimaryKeySelective(employee);
+	}
+
 }

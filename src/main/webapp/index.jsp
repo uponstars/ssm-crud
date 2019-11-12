@@ -27,8 +27,7 @@
 			  <div class="form-group">
 			    <label for="empName_add_input" class="col-sm-2 control-label">empName</label>
 			    <div class="col-sm-10">
-			      <input type="text" name="empName" class="form-control" id="empName_update_input" placeholder="empName">
-			      <span class="help-block"></span>
+			      <p class="form-control-static" id="empName_update_static"></p>
 			    </div>
 			  </div>
 			  <div class="form-group">
@@ -156,6 +155,7 @@
 	</div>
 	<script type="text/javascript">
 		var totalRecord;
+		var currentPage;
 		//页面加载完成以后直接发送一个ajax请求要到分页数据
 		$(function() {
 			to_page(1);
@@ -189,6 +189,7 @@
 				var deptNameTd = $("<td></td>").append(item.department.deptName);
 				var editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn")
 				                                    .append($("<span></span>").addClass("glyphicon glyphicon-pencil")).append("编辑");
+				editBtn.attr("edit-id", item.empId);
 				var delBtn = $("<button></button>").addClass("btn btn-danger btn-sm delete_btn")
                 									.append($("<span></span>").addClass("glyphicon glyphicon-trash")).append("删除");
 				var btnTd = $("<td></td>").append(editBtn).append(" ").append(delBtn);
@@ -209,6 +210,7 @@
 					                    + "页，总" + result.extend.pageInfo.pages
 					                    + "页，总" + result.extend.pageInfo.total + "条记录");
 			totalRecord = result.extend.pageInfo.total;
+			currentPage = result.extend.pageInfo.pageNum;
 		}
 		//解析显示分页条
 		function build_page_nav(result) {
@@ -385,11 +387,55 @@
 			});
 		});
 		
+		//点击编辑按钮，弹出模态框，显示员工信息
 		$(document).on("click", ".edit_btn", function () {
 			getDepts("#empUpdateModal select");
+			getEmp($(this).attr("edit-id"));
+			$("#emp_update_btn").attr("save-id", $(this).attr("edit-id"))
 			//弹出模态框
 			$("#empUpdateModal").modal({
 				backdrop:"static"
+			});
+		});
+		
+		//获得单个员工数据并回显在修改模态框中
+		function getEmp(id) {
+			$.ajax({
+				url:"${APP_PATH}/emp/"+id,
+				type:"GET",
+				success:function (result){
+					var empData = result.extend.emp;
+					$("#empName_update_static").text(empData.empName);
+					$("#email_update_input").val(empData.email);
+					$("#empUpdateModal input[name=gender]").val([empData.gender]);
+					$("#empUpdateModal select").val([empData.dId]);
+				}
+			});
+		}
+		
+		//点击更新按钮，更新员工信息
+		$("#emp_update_btn").click(function () {
+			//校验邮箱
+			var email = $("#email_update_input").val();
+			var regEmail = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+			if (!regEmail.test(email)) {
+				show_validate_msg("#email_update_input", "error", "邮箱格式不正确！");
+				return false;
+			} else {
+				show_validate_msg("#email_update_input", "success", "");
+			}
+			
+			//发送ajax请求保存员工数据
+			$.ajax({
+				url:"${APP_PATH}/emp/"+$(this).attr("save-id"),
+				type:"PUT",
+				data:$("#empUpdateModal form").serialize(),
+				success:function (result){
+					//关闭模态框
+					$("#empUpdateModal").modal("hide");
+					//回到本页面
+					to_page(currentPage);
+				}
 			});
 		});
 	</script>
