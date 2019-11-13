@@ -1,5 +1,6 @@
 package com.starofdream.crud.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,28 @@ public class EmployeeController {
 	@Autowired
 	EmployeeService employeeService;
 
+	/**
+	 * 单个/批量删除合一的方法
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/emp/{ids}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public Msg deleteEmpById(@PathVariable("ids") String ids) {
+		if (ids.contains("-")) {
+			List<Integer> del_ids = new ArrayList<Integer>();
+			String[] idStrings = ids.split("-");
+			for (String idString : idStrings) {
+				del_ids.add(Integer.parseInt(idString));
+			}
+			employeeService.deleteBatch(del_ids);
+		} else {
+			Integer id = Integer.parseInt(ids);
+			employeeService.deleteEmp(id);
+		}
+		return Msg.success();
+	}
+	
 	/**
 	 * 员工更新方法
 	 * @param employee
